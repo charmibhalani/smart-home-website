@@ -6,78 +6,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Home Login</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
     body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
-    .login-box {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 30px 40px;
+    .login-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.1); /* transparent background */
+      padding: 40px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px); /* frosted glass effect */
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
       width: 300px;
+      color: #fff;
+    }
+
+    .login-container h2 {
       text-align: center;
-    }
-
-    .login-box h2 {
       margin-bottom: 25px;
-      color: #333;
+      color: #fff;
     }
 
-    .textbox {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    .textbox input {
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
       width: 100%;
       padding: 10px;
+      margin: 8px 0;
       border: none;
-      border-bottom: 2px solid #666;
-      background: transparent;
-      outline: none;
-      font-size: 16px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 10px;
-      background: #333;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
       border-radius: 5px;
+      outline: none;
     }
 
-    .btn:hover {
-      background: #555;
+    .login-container input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .login-container input[type="submit"]:hover {
+      background-color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
+  <div class="login-container">
     <h2>Log In</h2>
     <form>
-      <div class="textbox">
-        <input type="text" placeholder="Username" name="username" required />
-      </div>
-      <div class="textbox">
-        <input type="password" placeholder="Password" name="password" required />
-      </div>
-      <button type="submit" class="btn">Login</button>
+      <input type="text" placeholder="Username" required />
+      <input type="password" placeholder="Password" required />
+      <input type="submit" value="Login" />
     </form>
   </div>
 </body>
