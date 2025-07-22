@@ -24,17 +24,19 @@
   </div>
 
   <script>
-  function validateLogin() {
+function validateLogin() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    if (username === "charmi" && password === "charmi@19") {
-      alert("Login successful!");
-window.location.href = "welcome.html";
+    if (username == "charmi" && password == "charmi@19") {
+        alert("Login successful!");
+        window.location.href = "welcome.html";
+        return false;  // ⬅ this stops form submit
     } else {
-      document.getElementById("error").textContent = "Invalid username or password";
+        document.getElementById("error").textContent = "Invalid username or password!";
+        return false;  // ⬅ also stop form submit on error
     }
-  }
+}
 </script>
 </body>
 </html>
