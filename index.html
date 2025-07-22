@@ -2,71 +2,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Smart Home Login</title>
   <style>
-    body {
+    body, html {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100%;
+      font-family: Arial, sans-serif;
       background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
-    .login-container {
+    .form-container {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 48%; /* adjust to align with Username */
+      left: 65%; /* adjust to center form box */
       transform: translate(-50%, -50%);
-      background-color: rgba(255, 255, 255, 0.1); /* transparent background */
-      padding: 40px;
-      border-radius: 10px;
-      backdrop-filter: blur(8px); /* frosted glass effect */
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
       width: 300px;
-      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .login-container h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #fff;
-    }
-
-    .login-container input[type="text"],
-    .login-container input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 5px;
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px 15px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.1); /* transparent, blends in */
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      color: white;
       outline: none;
     }
 
-    .login-container input[type="submit"] {
-      width: 100%;
-      padding: 10px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #ddd;
     }
 
-    .login-container input[type="submit"]:hover {
-      background-color: #555;
+    input[type="submit"] {
+      padding: 10px;
+      font-size: 16px;
+      background: rgba(0, 0, 0, 0.6); /* matches button look in image */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    input[type="submit"]:hover {
+      background: rgba(0, 0, 0, 0.8);
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Log In</h2>
-    <form>
-      <input type="text" placeholder="Username" required />
-      <input type="password" placeholder="Password" required />
-      <input type="submit" value="Login" />
-    </form>
-  </div>
+  <form class="form-container">
+    <input type="text" placeholder="Username" required />
+    <input type="password" placeholder="Password" required />
+    <input type="submit" value="LOG IN" />
+  </form>
 </body>
 </html>
