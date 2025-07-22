@@ -1,17 +1,16 @@
 
-   <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome - Smart Home Automation</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom right, #dff1ff, #a6d4fa);
-      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #dff1ff, #a6d4fa);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -19,33 +18,36 @@
     }
     .card {
       background: white;
-      border-radius: 12px;
-      padding: 30px;
+      border-radius: 15px;
+      padding: 30px 40px;
       text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      max-width: 300px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 320px;
       width: 100%;
     }
     .card h1 {
       margin-bottom: 20px;
-      color: #0066aa;
+      color: #007acc;
     }
     .btn {
-      background-color: #0066aa;
+      background-color: #007acc;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
+      padding: 10px 18px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
     }
     .btn:hover {
-      background-color: #005288;
+      background-color: #005e99;
     }
     .status {
       margin-top: 15px;
       font-weight: bold;
       color: red;
+      font-size: 15px;
     }
   </style>
 </head>
@@ -58,8 +60,7 @@
 
   <script>
     function checkStatus() {
-      // Here you could actually call your ESP32
-      // For now we'll just toggle the text for demo:
+      // Simulated toggle; replace with real ESP32 call later
       const statusEl = document.getElementById("espStatus");
       if (statusEl.textContent.includes("OFFLINE")) {
         statusEl.textContent = "ESP32 is ONLINE ✔";
