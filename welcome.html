@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome & ESP32 Status</title>
+  <style>
+    body {
+      background-color: #e0f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .welcome-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      color: #00796b;
+      font-size: 28px;
+    }
+
+    p {
+      color: #555;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .status-box {
+      background-color: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .status-label {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    .status-value {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .online {
+      color: green;
+    }
+
+    .offline {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="welcome-box">
+    <h1>Welcome to Smart Home System</h1>
+    <p>You have successfully logged in.</p>
+  </div>
+
+  <div class="status-box">
+    <div class="status-label">ESP32 Device Status:</div>
+    <div id="espStatus" class="status-value">Checking...</div>
+  </div>
+
+  <script>
+    // Simulated status checker (change to false to test offline view)
+    const espOnline = true; // Change to false to simulate offline
+
+    setTimeout(() => {
+      const statusEl = document.getElementById('espStatus');
+      if (espOnline) {
+        statusEl.textContent = "Online";
+        statusEl.classList.add('online');
+      } else {
+        statusEl.textContent = "Offline";
+        statusEl.classList.add('offline');
+      }
+    }, 2000); // Delay to simulate loading
+  </script>
+
+</body>
+</html>
