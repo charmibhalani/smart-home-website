@@ -13,54 +13,66 @@
       background-size: cover;
     }
 
-    .form-container {
+    .login-box {
       position: absolute;
-      top: 48%; /* adjust to align with Username */
-      left: 65%; /* adjust to center form box */
+      top: 52%; /* fine-tuned for alignment */
+      left: 69%;
       transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.2); /* matches light background */
+      padding: 30px 20px;
+      border-radius: 12px;
       width: 300px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-box h2 {
+      margin: 0 0 20px;
+      color: #222;
+      font-size: 28px;
     }
 
     input[type="text"],
     input[type="password"] {
-      padding: 10px 15px;
-      font-size: 16px;
-      background: rgba(255, 255, 255, 0.1); /* transparent, blends in */
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      background: rgba(255, 255, 255, 0.5);
       border: 1px solid #ccc;
       border-radius: 8px;
-      color: white;
+      font-size: 16px;
+      color: #000;
       outline: none;
     }
 
-    input[type="text"]::placeholder,
-    input[type="password"]::placeholder {
-      color: #ddd;
+    input::placeholder {
+      color: #444;
     }
 
     input[type="submit"] {
-      padding: 10px;
-      font-size: 16px;
-      background: rgba(0, 0, 0, 0.6); /* matches button look in image */
+      width: 100%;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.7);
       color: white;
       border: none;
       border-radius: 8px;
-      cursor: pointer;
+      font-size: 16px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     input[type="submit"]:hover {
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.9);
     }
   </style>
 </head>
 <body>
-  <form class="form-container">
-    <input type="text" placeholder="Username" required />
-    <input type="password" placeholder="Password" required />
-    <input type="submit" value="LOG IN" />
-  </form>
+  <div class="login-box">
+    <h2>Log In</h2>
+    <form>
+      <input type="text" placeholder="Username" required>
+      <input type="password" placeholder="Password" required>
+      <input type="submit" value="LOG IN">
+    </form>
+  </div>
 </body>
 </html>
