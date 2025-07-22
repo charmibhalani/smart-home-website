@@ -7,72 +7,104 @@
   <style>
     body, html {
       margin: 0;
+      padding: 0;
       height: 100%;
       font-family: Arial, sans-serif;
       background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-right: 60px;
+    }
+
     .login-box {
-      position: absolute;
-      top: 52%; /* fine-tuned for alignment */
-      left: 69%;
-      transform: translate(-50%, -50%);
-      background: rgba(255, 255, 255, 0.2); /* matches light background */
-      padding: 30px 20px;
-      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent */
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       width: 300px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px); /* Smooth background blur */
     }
 
     .login-box h2 {
-      margin: 0 0 20px;
-      color: #222;
+      margin-top: 0;
       font-size: 28px;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      background: rgba(255, 255, 255, 0.5);
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
+      font-weight: bold;
       color: #000;
-      outline: none;
     }
 
-    input::placeholder {
-      color: #444;
+    .login-box label {
+      display: block;
+      margin-top: 15px;
+      color: #000;
+      font-weight: 500;
     }
 
-    input[type="submit"] {
+    .login-box input[type="text"],
+    .login-box input[type="password"] {
       width: 100%;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #888;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .login-box button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #222;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 5px;
       cursor: pointer;
+      font-weight: bold;
     }
 
-    input[type="submit"]:hover {
-      background: rgba(0, 0, 0, 0.9);
+    .extra-box {
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.25);
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      color: #000;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .extra-box a {
+      color: #000;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Log In</h2>
-    <form>
-      <input type="text" placeholder="Username" required>
-      <input type="password" placeholder="Password" required>
-      <input type="submit" value="LOG IN">
-    </form>
+  <div class="container">
+    <div>
+      <div class="login-box">
+        <h2>Log In</h2>
+        <form>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required>
+
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+
+          <button type="submit">LOG IN</button>
+        </form>
+      </div>
+
+      <div class="extra-box">
+        Don't have an account? <a href="#">Sign up</a><br>
+        <a href="#">Forgot password?</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
