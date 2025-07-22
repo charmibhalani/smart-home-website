@@ -1,16 +1,74 @@
 
-     <!DOCTYPE html>
-<html>
+   <!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome - Smart Home Automation</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #dff1ff, #a6d4fa);
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 300px;
+      width: 100%;
+    }
+    .card h1 {
+      margin-bottom: 20px;
+      color: #0066aa;
+    }
+    .btn {
+      background-color: #0066aa;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background-color: #005288;
+    }
+    .status {
+      margin-top: 15px;
+      font-weight: bold;
+      color: red;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Smart Home Automation!</h1>
-  <p>ESP32 Status: <span id="status">Loading...</span></p>
+  <div class="card">
+    <h1>👋 Welcome</h1>
+    <button class="btn" onclick="checkStatus()">Check ESP32 Status</button>
+    <div class="status" id="espStatus">ESP32 is OFFLINE ✖</div>
+  </div>
 
   <script>
-    // Example: fake status, replace this with real request to ESP32
-    document.getElementById("status").textContent = "Connected";
+    function checkStatus() {
+      // Here you could actually call your ESP32
+      // For now we'll just toggle the text for demo:
+      const statusEl = document.getElementById("espStatus");
+      if (statusEl.textContent.includes("OFFLINE")) {
+        statusEl.textContent = "ESP32 is ONLINE ✔";
+        statusEl.style.color = "green";
+      } else {
+        statusEl.textContent = "ESP32 is OFFLINE ✖";
+        statusEl.style.color = "red";
+      }
+    }
   </script>
 </body>
 </html>
