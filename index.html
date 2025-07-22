@@ -10,55 +10,60 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: url('background.jpg.png') no-repeat center center fixed;
+      background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
-      padding-right: 50px;
     }
 
     .login-box {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.85);
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       width: 300px;
+      text-align: center;
     }
 
     .login-box h2 {
-      margin-bottom: 20px;
-      text-align: center;
+      margin-bottom: 25px;
       color: #333;
     }
 
-    .login-box input[type="text"],
-    .login-box input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #aaa;
-      border-radius: 5px;
+    .textbox {
+      margin-bottom: 20px;
+      text-align: left;
     }
 
-    .login-box button {
+    .textbox input {
       width: 100%;
       padding: 10px;
-      background-color: #111;
-      color: white;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
+      border-bottom: 2px solid #666;
+      background: transparent;
+      outline: none;
+      font-size: 16px;
     }
 
-    .login-box button:hover {
-      background-color: #333;
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background: #333;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      background: #555;
     }
   </style>
 </head>
@@ -66,9 +71,13 @@
   <div class="login-box">
     <h2>Log In</h2>
     <form>
-      <input type="text" placeholder="Username" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit">LOG IN</button>
+      <div class="textbox">
+        <input type="text" placeholder="Username" name="username" required />
+      </div>
+      <div class="textbox">
+        <input type="password" placeholder="Password" name="password" required />
+      </div>
+      <button type="submit" class="btn">Login</button>
     </form>
   </div>
 </body>
