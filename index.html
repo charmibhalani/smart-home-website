@@ -2,109 +2,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Smart Home Login</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
-
-    .container {
-      height: 100%;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding-right: 60px;
-    }
-
-    .login-box {
-      background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent */
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      width: 300px;
-      backdrop-filter: blur(4px); /* Smooth background blur */
-    }
-
-    .login-box h2 {
-      margin-top: 0;
-      font-size: 28px;
-      font-weight: bold;
-      color: #000;
-    }
-
-    .login-box label {
-      display: block;
-      margin-top: 15px;
-      color: #000;
-      font-weight: 500;
-    }
-
-    .login-box input[type="text"],
-    .login-box input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #888;
-      border-radius: 5px;
-      background-color: rgba(255, 255, 255, 0.6);
-    }
-
-    .login-box button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 10px;
-      background-color: #222;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .extra-box {
-      margin-top: 20px;
-      background-color: rgba(255, 255, 255, 0.25);
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-      color: #000;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    .extra-box a {
-      color: #000;
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="container">
-    <div>
-      <div class="login-box">
-        <h2>Log In</h2>
-        <form>
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" required>
+  <div class="background">
+    <div class="icon humidity"><i class="fas fa-tint"></i></div>
+    <div class="icon temperature"><i class="fas fa-thermometer-half"></i></div>
+    <div class="icon light"><i class="fas fa-lightbulb"></i></div>
 
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
-
-          <button type="submit">LOG IN</button>
-        </form>
-      </div>
-
-      <div class="extra-box">
-        Don't have an account? <a href="#">Sign up</a><br>
-        <a href="#">Forgot password?</a>
-      </div>
+    <div class="login-box">
+      <h2>Login</h2>
+      <form>
+        <input type="text" placeholder="Username" required>
+        <div class="password-field">
+          <input type="password" placeholder="Password" required>
+          <i class="fas fa-eye toggle-password"></i>
+        </div>
+        <button type="submit">Login</button>
+      </form>
     </div>
   </div>
+
+  <script>
+    const togglePassword = document.querySelector('.toggle-password');
+    const passwordInput = document.querySelector('.password-field input');
+
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+  </script>
 </body>
 </html>
