@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body, html {
+  height: 100%;
+}
+
+.background {
+  background: url('background.jpg') no-repeat center center/cover;
+  height: 100vh;
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  font-size: 30px;
+  color: #f5d76e;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  padding: 15px;
+}
+
+.humidity {
+  top: 20%;
+  left: 35%;
+}
+
+.temperature {
+  top: 15%;
+  right: 35%;
+}
+
+.light {
+  top: 30%;
+  right: 25%;
+}
+
+.login-box {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: #1e120f;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  width: 250px;
+  color: #fff;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  cursor: pointer;
+}
+
+.login-box button {
+  width: 100%;
+  background: #f2953b;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background: #e6801f;
+}
