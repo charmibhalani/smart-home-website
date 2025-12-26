@@ -107,10 +107,10 @@ body{
   background:linear-gradient(135deg,var(--top1),var(--top2));
   color:white;
 }
-.menu,.back{font-size:26px;cursor:pointer}
+.menu{font-size:26px;cursor:pointer}
 .topbar h3{flex:1;text-align:center;margin:0}
 
-/* 🔥 PAGE VISIBILITY FIX (IMPORTANT) */
+/* PAGE VISIBILITY (NO SWIPE ISSUE) */
 .page{
   display:none;
   min-height:calc(100vh - 56px);
@@ -220,6 +220,17 @@ body{
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
+/* DARK MODE (FIXED) */
+const darkToggle = document.getElementById("darkToggle");
+if(localStorage.theme==="dark"){
+  document.body.classList.add("dark");
+  darkToggle.checked=true;
+}
+darkToggle.onchange=()=>{
+  document.body.classList.toggle("dark");
+  localStorage.theme=document.body.classList.contains("dark")?"dark":"light";
+};
+
 /* FIREBASE */
 const appFb=initializeApp({
   apiKey:"AIzaSyAht7TWN8NlbICl0VbEIuc19Mri7oPlXvc",
@@ -258,7 +269,7 @@ window.navigate=p=>{
 function startESPCheck(){
   setTimeout(()=>{
     get(ref(db,"/status/lastSeen")).then(s=>{
-      espStatus.innerHTML = (s.exists() && Date.now()-s.val()<10000)
+      espStatus.innerHTML=(s.exists()&&Date.now()-s.val()<10000)
         ? `<span class="online">● ESP32 ONLINE</span>`
         : `<span class="offline">● ESP32 OFFLINE</span>`;
     });
@@ -285,10 +296,10 @@ for(let i=1;i<=4;i++){
 
 /* PASSWORD EYE */
 eye.onclick=()=>{
-  pass.type = pass.type==="password" ? "text" : "password";
-  eye.className = pass.type==="password"
-    ? "fa-solid fa-eye-slash"
-    : "fa-solid fa-eye";
+  pass.type=pass.type==="password"?"text":"password";
+  eye.className=pass.type==="password"
+    ?"fa-solid fa-eye-slash"
+    :"fa-solid fa-eye";
 };
 </script>
 
