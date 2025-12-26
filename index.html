@@ -1,41 +1,342 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Home Login</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-  <div class="background">
-    <div class="icon humidity"><i class="fas fa-tint"></i></div>
-    <div class="icon temperature"><i class="fas fa-thermometer-half"></i></div>
-    <div class="icon light"><i class="fas fa-lightbulb"></i></div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Home</title>
 
-    <div class="login-box">
-      <h2>Login</h2>
-      <form>
-        <input type="text" placeholder="Username" required>
-        <div class="password-field">
-          <input type="password" placeholder="Password" required>
-          <i class="fas fa-eye toggle-password"></i>
-        </div>
-        <button type="submit">Login</button>
-      </form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --panel:#e0f2fe;
+  --text:#0f172a;
+  --btn:#93c5fd;
+  --btnText:#020617;
+  --top1:#60a5fa;
+  --top2:#38bdf8;
+  --success:#22c55e;
+  --danger:#ef4444;
+}
+.dark{
+  --bg:#020617;
+  --card:#0f172a;
+  --panel:#1e293b;
+  --text:#e5e7eb;
+  --btn:#334155;
+  --btnText:#e5e7eb;
+  --top1:#1e293b;
+  --top2:#020617;
+}
+*{box-sizing:border-box;font-family:system-ui}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
+  overflow-x:hidden;
+}
+
+/* LOGIN */
+.login{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#60a5fa,#38bdf8)
+}
+.login-box{
+  background:var(--card);
+  padding:40px;
+  border-radius:20px;
+  width:90%;
+  max-width:380px;
+}
+.login-box input{
+  width:100%;padding:14px;margin:10px 0;
+  border-radius:10px;border:1px solid #cbd5f5;
+}
+.login-box button{
+  width:100%;padding:14px;border:none;
+  border-radius:12px;background:#60a5fa;color:white;font-size:18px;
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;top:0;left:0;height:100%;width:240px;
+  background:var(--panel);
+  padding:20px;transform:translateX(-100%);
+  transition:.3s;z-index:20;
+}
+.sidebar.show{transform:translateX(0)}
+.sidebar button{
+  width:100%;padding:12px;margin:8px 0;
+  border:none;border-radius:12px;
+  background:var(--btn);
+  color:var(--btnText);
+  font-size:16px;
+}
+
+/* DARK TOGGLE */
+.toggle{
+  margin-top:20px;
+  padding:12px;
+  border-radius:12px;
+  background:var(--btn);
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+/* OVERLAY */
+#overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.4);
+  opacity:0;pointer-events:none;
+  transition:.3s;z-index:15;
+}
+#overlay.show{opacity:1;pointer-events:auto}
+
+.hidden{display:none}
+.app{min-height:100vh}
+
+/* TOPBAR */
+.topbar{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;
+  background:linear-gradient(135deg,var(--top1),var(--top2));
+  color:white;
+}
+.menu,.back{font-size:26px;cursor:pointer}
+.topbar h3{flex:1;text-align:center;margin:0}
+
+/* PAGES */
+.page{
+  position:absolute;top:56px;left:0;width:100%;
+  min-height:calc(100vh - 56px);
+  padding:20px;
+  transform:translateX(100%);
+  transition:.35s;
+}
+.page.active{transform:translateX(0)}
+.page.left{transform:translateX(-100%)}
+
+/* CARDS */
+.card{
+  background:var(--card);
+  padding:22px;border-radius:20px;
+  margin-bottom:20px;
+}
+
+/* HOME */
+.hello-card{
+  background:linear-gradient(135deg,#f0f9ff,#e0f2fe);
+}
+.dark .hello-card{background:#0f172a}
+
+.esp-card{
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,#ecfeff,#e0f2fe);
+}
+.dark .esp-card{background:#1e293b}
+.esp-icon{font-size:28px}
+.online{color:var(--success)}
+.offline{color:var(--danger)}
+
+/* LED */
+.led-vertical{display:flex;flex-direction:column;gap:14px}
+.led-btn{
+  padding:18px;border:none;border-radius:18px;
+  font-size:17px;font-weight:700;
+  background:var(--btn);
+  color:var(--btnText);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="login">
+  <div class="login-box">
+    <h2>Smart Home</h2>
+    <input id="user" placeholder="Username">
+
+    <div style="position:relative">
+      <input id="pass" type="password" placeholder="Password">
+      <i id="eye" class="fa-solid fa-eye-slash"
+         style="position:absolute;right:14px;top:50%;
+         transform:translateY(-50%);
+         cursor:pointer;color:#64748b;font-size:18px"></i>
+    </div>
+
+    <button id="loginBtn">Login</button>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <h2>🏠 Smart Home</h2>
+  <button onclick="navigate('home')">Home</button>
+  <button onclick="navigate('room1')">Room 1</button>
+  <button onclick="logout()">Logout</button>
+
+  <div class="toggle">
+    <span>🌙 Dark Mode</span>
+    <input type="checkbox" id="darkToggle">
+  </div>
+</div>
+<div id="overlay"></div>
+
+<!-- APP -->
+<div class="app hidden" id="app">
+  <div class="topbar">
+    <span class="menu" id="menuBtn" onclick="toggleSidebar()">☰</span>
+    <span class="back hidden" id="backBtn" onclick="goBack()">←</span>
+    <h3 id="title">Home</h3>
+  </div>
+
+  <!-- HOME PAGE -->
+  <div class="page" id="home">
+    <div class="card hello-card">
+      <h2>Hello, Aayush 👋</h2>
+      <p>Welcome to your Smart Home</p>
+    </div>
+
+    <div class="card esp-card">
+      <div class="esp-icon">📡</div>
+      <div id="espStatus">Checking connection...</div>
     </div>
   </div>
 
-  <script>
-    const togglePassword = document.querySelector('.toggle-password');
-    const passwordInput = document.querySelector('.password-field input');
+  <!-- ROOM 1 PAGE (TEMPERATURE + LED) -->
+  <div class="page" id="room1">
+    <div class="card" id="temp">Temperature: -- °C</div>
+    <div class="card">
+      <div class="led-vertical" id="ledGrid"></div>
+    </div>
+  </div>
+</div>
 
-    togglePassword.addEventListener('click', () => {
-      const type = passwordInput.type === 'password' ? 'text' : 'password';
-      passwordInput.type = type;
-      togglePassword.classList.toggle('fa-eye-slash');
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+/* DOM */
+const espStatus=document.getElementById("espStatus");
+const darkToggle=document.getElementById("darkToggle");
+
+/* DARK MODE */
+if(localStorage.theme==="dark"){
+  document.body.classList.add("dark");
+  darkToggle.checked=true;
+}
+darkToggle.onchange=()=>{
+  document.body.classList.toggle("dark");
+  localStorage.theme=document.body.classList.contains("dark")?"dark":"light";
+};
+
+/* FIREBASE */
+const appFb=initializeApp({
+  apiKey:"AIzaSyAht7TWN8NlbICl0VbEIuc19Mri7oPlXvc",
+  databaseURL:"https://home-automation-89830-default-rtdb.firebaseio.com"
+});
+const db=getDatabase(appFb);
+
+/* LOGIN */
+loginBtn.onclick=()=>{
+  if(user.value==="aayush" && pass.value==="Aayush@1982"){
+    login.classList.add("hidden");
+    app.classList.remove("hidden");
+    navigate("home");
+    startESPCheck();
+  }else alert("Invalid login");
+};
+window.logout=()=>location.reload();
+
+/* SIDEBAR */
+window.toggleSidebar=()=>{
+  sidebar.classList.toggle("show");
+  overlay.classList.toggle("show");
+};
+overlay.onclick=()=>toggleSidebar();
+
+/* NAVIGATION */
+let history=["home"],current="home";
+window.navigate=p=>{
+  if(p==="home"){
+    document.querySelectorAll(".page").forEach(pg=>pg.classList.remove("active","left"));
+    home.classList.add("active");
+    history=["home"];current="home";
+  }else{
+    document.getElementById(current).classList.add("left");
+    document.getElementById(p).classList.add("active");
+    history.push(p);current=p;
+  }
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+  updateUI();
+};
+window.goBack=()=>{
+  if(history.length<=1)return;
+  const cur=history.pop();
+  const prev=history.at(-1);
+  document.getElementById(cur).classList.remove("active");
+  document.getElementById(prev).classList.remove("left");
+  current=prev;
+  updateUI();
+};
+function updateUI(){
+  title.innerText=current==="home"?"Home":"Room 1";
+  backBtn.classList.toggle("hidden",current==="home");
+  menuBtn.classList.toggle("hidden",current!=="home");
+}
+
+/* ESP32 STATUS */
+function startESPCheck(){
+  setTimeout(()=>{
+    get(ref(db,"/status/lastSeen")).then(s=>{
+      if(!s.exists()){
+        espStatus.innerHTML=`<span class="offline">● ESP32 OFFLINE</span>`;
+        return;
+      }
+      const online = Date.now() - s.val() < 10000;
+      espStatus.innerHTML = online
+        ? `<span class="online">● ESP32 ONLINE</span>`
+        : `<span class="offline">● ESP32 OFFLINE</span>`;
     });
-  </script>
+  },500);
+}
+
+/* TEMP */
+onValue(ref(db,"/status/temperature"),s=>{
+  if(s.exists()) temp.textContent=`Temperature: ${s.val()} °C`;
+});
+
+/* LEDS */
+const states=[false,false,false,false];
+for(let i=1;i<=4;i++){
+  const b=document.createElement("button");
+  b.className="led-btn";
+  b.onclick=()=>set(ref(db,`/leds/led${i}`),!states[i-1]);
+  ledGrid.appendChild(b);
+  onValue(ref(db,`/leds/led${i}`),s=>{
+    states[i-1]=s.val();
+    b.innerText=states[i-1]?`Turn OFF LED ${i}`:`Turn ON LED ${i}`;
+  });
+}
+
+/* PASSWORD EYE */
+eye.onclick=()=>{
+  if(pass.type==="password"){
+    pass.type="text";
+    eye.className="fa-solid fa-eye";
+  }else{
+    pass.type="password";
+    eye.className="fa-solid fa-eye-slash";
+  }
+};
+</script>
+
 </body>
 </html>
