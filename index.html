@@ -110,16 +110,15 @@ body{
 .menu,.back{font-size:26px;cursor:pointer}
 .topbar h3{flex:1;text-align:center;margin:0}
 
-/* PAGES */
+/* 🔥 PAGE VISIBILITY FIX (IMPORTANT) */
 .page{
-  position:absolute;top:56px;left:0;width:100%;
+  display:none;
   min-height:calc(100vh - 56px);
   padding:20px;
-  transform:translateX(100%);
-  transition:.35s;
 }
-.page.active{transform:translateX(0)}
-.page.left{transform:translateX(-100%)}
+.page.active{
+  display:block;
+}
 
 /* CARDS */
 .card{
@@ -161,6 +160,7 @@ body{
   <div class="login-box">
     <h2>Smart Home</h2>
     <input id="user" placeholder="Username">
+
     <div style="position:relative">
       <input id="pass" type="password" placeholder="Password">
       <i id="eye" class="fa-solid fa-eye-slash"
@@ -168,6 +168,7 @@ body{
          transform:translateY(-50%);
          cursor:pointer;color:#64748b"></i>
     </div>
+
     <button id="loginBtn">Login</button>
   </div>
 </div>
@@ -189,12 +190,11 @@ body{
 <!-- APP -->
 <div class="app hidden" id="app">
   <div class="topbar">
-    <span class="menu" id="menuBtn" onclick="toggleSidebar()">☰</span>
-    <span class="back hidden" id="backBtn" onclick="goBack()">←</span>
+    <span class="menu" onclick="toggleSidebar()">☰</span>
     <h3 id="title">Home</h3>
   </div>
 
-  <!-- HOME (ACTIVE BY DEFAULT) -->
+  <!-- HOME -->
   <div class="page active" id="home">
     <div class="card hello-card">
       <h2>Hello, Aayush 👋</h2>
@@ -217,7 +217,79 @@ body{
 </div>
 
 <script type="module">
-/* YOUR EXISTING JS — UNCHANGED */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+/* FIREBASE */
+const appFb=initializeApp({
+  apiKey:"AIzaSyAht7TWN8NlbICl0VbEIuc19Mri7oPlXvc",
+  databaseURL:"https://home-automation-89830-default-rtdb.firebaseio.com"
+});
+const db=getDatabase(appFb);
+
+/* LOGIN */
+loginBtn.onclick=()=>{
+  if(user.value==="aayush" && pass.value==="Aayush@1982"){
+    login.classList.add("hidden");
+    app.classList.remove("hidden");
+    navigate("home");
+    startESPCheck();
+  }else alert("Invalid login");
+};
+window.logout=()=>location.reload();
+
+/* SIDEBAR */
+window.toggleSidebar=()=>{
+  sidebar.classList.toggle("show");
+  overlay.classList.toggle("show");
+};
+overlay.onclick=()=>toggleSidebar();
+
+/* NAVIGATION */
+window.navigate=p=>{
+  document.querySelectorAll(".page").forEach(pg=>pg.classList.remove("active"));
+  document.getElementById(p).classList.add("active");
+  title.innerText=p==="home"?"Home":"Room 1";
+  sidebar.classList.remove("show");
+  overlay.classList.remove("show");
+};
+
+/* ESP32 */
+function startESPCheck(){
+  setTimeout(()=>{
+    get(ref(db,"/status/lastSeen")).then(s=>{
+      espStatus.innerHTML = (s.exists() && Date.now()-s.val()<10000)
+        ? `<span class="online">● ESP32 ONLINE</span>`
+        : `<span class="offline">● ESP32 OFFLINE</span>`;
+    });
+  },500);
+}
+
+/* TEMP */
+onValue(ref(db,"/status/temperature"),s=>{
+  if(s.exists()) temp.textContent=`Temperature: ${s.val()} °C`;
+});
+
+/* LEDS */
+const states=[false,false,false,false];
+for(let i=1;i<=4;i++){
+  const b=document.createElement("button");
+  b.className="led-btn";
+  b.onclick=()=>set(ref(db,`/leds/led${i}`),!states[i-1]);
+  ledGrid.appendChild(b);
+  onValue(ref(db,`/leds/led${i}`),s=>{
+    states[i-1]=s.val();
+    b.innerText=states[i-1]?`Turn OFF LED ${i}`:`Turn ON LED ${i}`;
+  });
+}
+
+/* PASSWORD EYE */
+eye.onclick=()=>{
+  pass.type = pass.type==="password" ? "text" : "password";
+  eye.className = pass.type==="password"
+    ? "fa-solid fa-eye-slash"
+    : "fa-solid fa-eye";
+};
 </script>
 
 </body>
