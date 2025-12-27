@@ -39,29 +39,69 @@ body{
   overflow-x:hidden;
 }
 
-/* LOGIN */
+/* ================= LOGIN (REPLACED ONLY THIS) ================= */
 .login{
   height:100vh;
+  background:url("https://uploads.onecompiler.io/448tccc2g/448tbrphm/WhatsApp%20Image%202025-12-27%20at%203.31.50%20PM.jpeg")
+  no-repeat center center / cover;
   display:flex;
+  justify-content:flex-end;
   align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#60a5fa,#38bdf8)
+  position:relative;
 }
+.login::before{
+  content:"";
+  position:absolute;
+  right:0;top:0;
+  width:45%;height:100%;
+  background:linear-gradient(
+    to left,
+    rgba(255,255,255,0.9),
+    rgba(255,255,255,0.6),
+    rgba(255,255,255,0.2)
+  );
+}
+
 .login-box{
-  background:var(--card);
+  position:relative;
+  z-index:2;
+  width:420px;
+  margin-right:8%;
   padding:40px;
   border-radius:20px;
-  width:90%;
-  max-width:380px;
 }
+
+.login-box h2{
+  font-size:36px;
+  margin-bottom:8px;
+}
+
+.login-box p{
+  margin-bottom:30px;
+}
+
 .login-box input{
-  width:100%;padding:14px;margin:10px 0;
-  border-radius:10px;border:1px solid #cbd5f5;
+  width:100%;
+  padding:16px;
+  margin:12px 0;
+  border-radius:14px;
+  border:none;
+  background:rgba(255,255,255,.6);
+  backdrop-filter:blur(8px);
+  font-size:16px;
 }
+
 .login-box button{
-  width:100%;padding:14px;border:none;
-  border-radius:12px;background:#60a5fa;color:white;font-size:18px;
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(180deg,#3b82f6,#2563eb);
+  color:white;
+  font-size:18px;
+  cursor:pointer;
 }
+/* ============================================================= */
 
 /* SIDEBAR */
 .sidebar{
@@ -110,15 +150,13 @@ body{
 .menu{font-size:26px;cursor:pointer}
 .topbar h3{flex:1;text-align:center;margin:0}
 
-/* PAGE VISIBILITY (NO SWIPE ISSUE) */
+/* PAGE VISIBILITY */
 .page{
   display:none;
   min-height:calc(100vh - 56px);
   padding:20px;
 }
-.page.active{
-  display:block;
-}
+.page.active{display:block}
 
 /* CARDS */
 .card{
@@ -158,15 +196,16 @@ body{
 <!-- LOGIN -->
 <div class="login" id="login">
   <div class="login-box">
-    <h2>Smart Home</h2>
+    <h2>Welcome Back</h2>
+    <p>Login to control your smart home</p>
+
     <input id="user" placeholder="Username">
 
     <div style="position:relative">
       <input id="pass" type="password" placeholder="Password">
       <i id="eye" class="fa-solid fa-eye-slash"
-         style="position:absolute;right:14px;top:50%;
-         transform:translateY(-50%);
-         cursor:pointer;color:#64748b"></i>
+         style="position:absolute;right:16px;top:50%;
+         transform:translateY(-50%);cursor:pointer;"></i>
     </div>
 
     <button id="loginBtn">Login</button>
@@ -194,7 +233,6 @@ body{
     <h3 id="title">Home</h3>
   </div>
 
-  <!-- HOME -->
   <div class="page active" id="home">
     <div class="card hello-card">
       <h2>Hello, Aayush 👋</h2>
@@ -207,7 +245,6 @@ body{
     </div>
   </div>
 
-  <!-- ROOM 1 -->
   <div class="page" id="room1">
     <div class="card" id="temp">Temperature: -- °C</div>
     <div class="card">
@@ -220,8 +257,8 @@ body{
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
-/* DARK MODE (FIXED) */
-const darkToggle = document.getElementById("darkToggle");
+/* DARK MODE */
+const darkToggle=document.getElementById("darkToggle");
 if(localStorage.theme==="dark"){
   document.body.classList.add("dark");
   darkToggle.checked=true;
@@ -238,7 +275,7 @@ const appFb=initializeApp({
 });
 const db=getDatabase(appFb);
 
-/* LOGIN */
+/* LOGIN LOGIC (UNCHANGED) */
 loginBtn.onclick=()=>{
   if(user.value==="aayush" && pass.value==="Aayush@1982"){
     login.classList.add("hidden");
@@ -265,7 +302,7 @@ window.navigate=p=>{
   overlay.classList.remove("show");
 };
 
-/* ESP32 */
+/* ESP */
 function startESPCheck(){
   setTimeout(()=>{
     get(ref(db,"/status/lastSeen")).then(s=>{
